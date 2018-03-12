@@ -17,7 +17,7 @@ load_pubkey() {
     mkdir -p ~/.ssh
     echo $known_host > ~/.ssh/known_hosts
     cat > ~/.ssh/config <<EOF
-StrictHostKeyChecking no
+StrictHostKeyChecking yes
 LogLevel quiet
 EOF
     chmod 0600 ~/.ssh/config
