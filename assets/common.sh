@@ -5,7 +5,7 @@ load_pubkey() {
   local private_key_path=$TMPDIR/git-resource-private-key
 
   (jq -r '.source.private_key // empty' < $1) > $private_key_path
-
+  known_host=$(jq -r '.source.known_host // empty' < $1) 
   if [ -s $private_key_path ]; then
     chmod 0600 $private_key_path
 
@@ -15,6 +15,7 @@ load_pubkey() {
     SSH_ASKPASS=$(dirname $0)/askpass.sh DISPLAY= ssh-add $private_key_path >/dev/null
 
     mkdir -p ~/.ssh
+    echo $known_host > ~/.ssh/known_hosts
     cat > ~/.ssh/config <<EOF
 StrictHostKeyChecking no
 LogLevel quiet
